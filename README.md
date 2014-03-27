@@ -30,3 +30,9 @@ Famelo:
 	autoCreationWhitelist:
 		- My.Package
 ```
+
+Logging
+-------
+
+The extension will write to a seperate Translatio.log which label will be added
+were, so you can keep a bit track of it.
