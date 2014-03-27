@@ -13,11 +13,9 @@ the Translator and TranslationViewHelper to combine the "translateByOriginalLabe
 and "translateById" methods into one "translate" method that can easily
 be catched through AOP.
 
-[WIP][FEATURE] Refactor TranslateViewHelper to use new translate method
-https://review.typo3.org/#/c/28899/
+- [WIP][FEATURE] Refactor TranslateViewHelper to use new translate method (https://review.typo3.org/#/c/28899/)
 
-[WIP][FEATURE] Improve Translator API
-https://review.typo3.org/#/c/28897/
+- [WIP][FEATURE] Improve Translator API (https://review.typo3.org/#/c/28897/)
 
 Settings
 --------
