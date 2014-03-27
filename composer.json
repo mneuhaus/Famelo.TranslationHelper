@@ -1,0 +1,24 @@
+{
+	"name": "famelo\/translationHelper",
+	"type": "typo3-flow-package",
+	"description": "Package to automatically add missing labels to xlf files",
+	"keywords": [
+		"xliff", "localization", "translation", "l10n", "TYPO3 Flow"
+	],
+	"license": "MIT",
+	"authors" : [
+		{
+			"name": "Marc Neuhaus",
+			"email": "apocalip@gmail.com",
+			"homepage": "http://famelo.de/"
+		}
+	],
+	"require": {
+		"typo3/flow": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Famelo\\TranslationHelper": "Classes"
+		}
+	}
+}

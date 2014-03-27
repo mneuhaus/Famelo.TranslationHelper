@@ -1,0 +1,22 @@
+Famelo\TranslationHelper\Core\XliffModel:
+  properties:
+    cache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: Flow_I18n_XmlModelCache
+
+Famelo\TranslationHelper\Log\TranslationLoggerInterface:
+  scope: singleton
+  factoryObjectName: TYPO3\Flow\Log\LoggerFactory
+  arguments:
+    1:
+      value: 'Translation'
+    2:
+      value: 'Famelo\TranslationHelper\Log\TranslationLogger'
+    3:
+      setting: TYPO3.Flow.log.translationLogger.backend
+    4:
+      setting: TYPO3.Flow.log.translationLogger.backendOptions
