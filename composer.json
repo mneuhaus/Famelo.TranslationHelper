@@ -1,5 +1,5 @@
 {
-	"name": "famelo\/translationHelper",
+	"name": "famelo\/translationhelper",
 	"type": "typo3-flow-package",
 	"description": "Package to automatically add missing labels to xlf files",
 	"keywords": [
