@@ -32,6 +32,11 @@ use TYPO3\Flow\Utility\Files;
  */
 class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 	/**
+	 * @var array
+	 */
+	protected $labelIds = array();
+
+	/**
 	 * @param string $sourcePath
 	 * @param \TYPO3\Flow\I18n\Locale $locale The locale represented by the file
 	 */
@@ -41,6 +46,9 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 			$this->createXliffFile();
 		}
 		$this->xml = simplexml_load_file($this->sourcePath);
+		foreach ($this->xml->file->body->children() as $transUnit) {
+			$this->labelIds[] = $transUnit->attributes()->id;
+		}
 	}
 
 	public function createXliffFile() {
@@ -55,6 +63,10 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 	}
 
 	public function add($labelId, $default = '') {
+		if ($this->hasLabel($labelId)) {
+			return;
+		}
+
 		$transUnit = $this->xml->file->body->addChild('trans-unit');
 		$transUnit->addAttribute('id', $labelId);
 		$transUnit->addChild('source', $default);
@@ -65,5 +77,11 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 		$dom->formatOutput = true;
 		$dom->loadXML($this->xml->asXML());
 		file_put_contents($this->sourcePath, $dom->saveXML());
+
+		$this->labelIds[] = $labelId;
+	}
+
+	public function hasLabel($labelId) {
+		return in_array($labelId, $this->labelIds);
 	}
 }

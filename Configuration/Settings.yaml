@@ -1,6 +1,6 @@
-Famelo:
-  TranslationHelper:
-    autoCreateTranslations: false
+#Famelo:
+#  TranslationHelper:
+#    autoCreateTranslations: false
 #    autoCreationWhitelist:
 #      - My.Package
 
