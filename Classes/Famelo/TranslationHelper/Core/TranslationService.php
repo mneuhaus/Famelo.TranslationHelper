@@ -113,7 +113,7 @@ class TranslationService {
 			$result = $joinPoint->getAdviceChain()->proceed($joinPoint);
 		} catch (TranslationNotFoundException $exception) {
 			if ($labelId === NULL && $originalLabel !== NULL) {
-				$labelId = strtolower('slug.' . preg_replace('/[^A-Za-z0-9-]+/', '-', $originalLabel));
+				$labelId = trim(strtolower('slug.' . preg_replace('/[^A-Za-z0-9-]+/', '-', $originalLabel)), '-');
 			}
 
 			$model = new XliffModel($fileName, $locale);
