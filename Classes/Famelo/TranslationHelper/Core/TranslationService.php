@@ -45,6 +45,12 @@ class TranslationService {
 	protected $whitelist = array();
 
 	/**
+	 * @var array
+	 * @Flow\Inject(setting="debugWrapTranslations")
+	 */
+	protected $debugWrapTranslations = FALSE;
+
+	/**
 	 * An absolute path to the directory where translation files reside.
 	 *
 	 * @var string
@@ -120,7 +126,7 @@ class TranslationService {
 			$model->initializeObject();
 
 			if (in_array($labelId, $this->runtimeCache)) {
-				return $originalLabel;
+				return $this->wrapString($originalLabel, $locale);
 			}
 
 			if (!$model->hasLabel($labelId)) {
@@ -136,7 +142,7 @@ class TranslationService {
 			}
 
 			$this->runtimeCache[] = $labelId;
-			return $originalLabel;
+			return $this->wrapString($originalLabel, $locale);
 		} catch (\TYPO3\Flow\I18n\Exception $exception) {
 			switch ($exception->getCode()) {
 				case 1334759591:
@@ -159,7 +165,15 @@ class TranslationService {
 			}
 		}
 
-		return $result;
+		return $this->wrapString($result, $locale);
+	}
+
+	public function wrapString($string, $locale) {
+		if ($this->debugWrapTranslations === FALSE) {
+			return $string;
+		}
+		return '❪' . $string . '❫';
+		// return '<span style="background: rgba(34,147,217,0.3);;" title="' . $locale->getLanguage() . '">' . $string . '</span>';
 	}
 
 	public function flushI18nCaches() {

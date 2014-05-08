@@ -1,8 +1,9 @@
-#Famelo:
-#  TranslationHelper:
+Famelo:
+  TranslationHelper:
 #    autoCreateTranslations: false
 #    autoCreationWhitelist:
 #      - My.Package
+    debugWrapTranslations: false
 
 TYPO3:
   Flow:
