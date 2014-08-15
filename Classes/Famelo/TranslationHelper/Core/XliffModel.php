@@ -47,7 +47,7 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 		}
 		$this->xml = simplexml_load_file($this->sourcePath);
 		foreach ($this->xml->file->body->children() as $transUnit) {
-			$this->labelIds[] = $transUnit->attributes()->id;
+			$this->labelIds[] = strval($transUnit->attributes()->id);
 		}
 	}
 
@@ -62,15 +62,19 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 </xliff>');
 	}
 
-	public function add($labelId, $default = '') {
+	public function add($labelId, $default = '', $target = NULL) {
 		if ($this->hasLabel($labelId)) {
 			return;
+		}
+
+		if ($target === NULL) {
+			$target = $default;
 		}
 
 		$transUnit = $this->xml->file->body->addChild('trans-unit');
 		$transUnit->addAttribute('id', $labelId);
 		$transUnit->addChild('source', $default);
-		$transUnit->addChild('target', $default);
+		$transUnit->addChild('target', $target);
 
 		$dom = new \DOMDocument('1.0');
 		$dom->preserveWhiteSpace = false;
@@ -81,7 +85,31 @@ class XliffModel extends \TYPO3\Flow\I18n\Xliff\XliffModel {
 		$this->labelIds[] = $labelId;
 	}
 
+	public function updateLabel($labelId, $source, $target) {
+
+		foreach ($this->xml->file->body->children() as $transUnit) {
+			if (strval($transUnit->attributes()->id) == $labelId) {
+				$transUnit->source = $source;
+				$transUnit->target = $target;
+				break;
+			}
+		}
+
+		$dom = new \DOMDocument('1.0');
+		$dom->preserveWhiteSpace = false;
+		$dom->formatOutput = true;
+		$dom->loadXML($this->xml->asXML());
+		file_put_contents($this->sourcePath, $dom->saveXML());
+	}
+
 	public function hasLabel($labelId) {
 		return in_array($labelId, $this->labelIds);
+	}
+
+	public function getTranslationUnits() {
+		if (isset($this->xmlParsedData['translationUnits'])) {
+			return $this->xmlParsedData['translationUnits'];
+		}
+		return array();
 	}
 }

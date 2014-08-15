@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{namespace bootstrap=TYPO3\Twitter\Bootstrap\ViewHelpers}
+		<meta charset="utf-8">
+		<title><f:render section="Title" /></title>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<bootstrap:include version="3.1" />
+		<link href="{f:uri.resource(path: 'Styles/Main.css')}" media="screen" rel="stylesheet" type="text/css" />
+		<f:base />
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">TranslationHelper</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Dashboard</a></li>
+					</ul>
+					<form class="navbar-form navbar-right">
+						<input type="text" class="form-control" placeholder="Search...">
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4 col-md-3 sidebar">
+					<ul class="nav nav-sidebar">
+						<f:for each="{menuItems}" as="menuItem">
+						<li>
+							<f:link.action action="package" arguments="{packageKey: menuItem.package.packageKey}">
+								{menuItem.package.packageKey}
+							</f:link.action>
+							<f:if condition="{menuItem.sources}">
+								<ul class="nav">
+									<f:for each="{menuItem.sources}" as="source">
+										<li>
+											<f:link.action action="source" arguments="{packageKey: menuItem.package.packageKey, source: source}">
+												{source}
+											</f:link.action>
+										</li>
+									</f:for>
+								</ul>
+							</f:if>
+						</li>
+						</f:for>
+					</ul>
+				</div>
+				<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+					<h1><f:render section="Title" /></h1>
+					<f:render section="Content" />
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

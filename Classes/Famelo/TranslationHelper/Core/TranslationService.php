@@ -11,9 +11,9 @@ namespace Famelo\TranslationHelper\Core;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Famelo\TranslationHelper\Core\TranslationNotFoundException;
 use Famelo\TranslationHelper\Core\XliffModel;
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\I18n\Exception\TranslationNotFoundException;
 use TYPO3\Flow\Utility\Files;
 
 /**
@@ -87,7 +87,6 @@ class TranslationService {
 
 	/**
 	 *
-	 * @Flow\Around("setting(Famelo.TranslationHelper.autoCreateTranslations) && method(TYPO3\Flow\I18n\Translator->translate(*))")
 	 * @param \TYPO3\Flow\Aop\JoinPointInterface $joinPoint The current joinpoint
 	 * @return mixed The result of the target method if it has not been intercepted
 	 */
@@ -173,7 +172,6 @@ class TranslationService {
 			return $string;
 		}
 		return '❪' . $string . '❫';
-		// return '<span style="background: rgba(34,147,217,0.3);;" title="' . $locale->getLanguage() . '">' . $string . '</span>';
 	}
 
 	public function flushI18nCaches() {
